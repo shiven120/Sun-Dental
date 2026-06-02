@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600;700&family=JetBrains+Mono&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --color-brand-primary: #B59972; /* Sophisticated Gold */
+  --color-brand-dark: #1A1A1A;
+  --color-brand-bg: #FDFCFB;
+  --color-brand-beige: #F7F3EF;
+  --color-brand-border: #E5E1DB;
+  --color-brand-hover: #F3EFE9;
+}
+
+@layer base {
+  body {
+    @apply bg-brand-bg text-brand-dark font-sans antialiased;
+  }
+  
+  h1, h2, h3, h4, .serif {
+    @apply font-serif;
+  }
+
+  .mono {
+    @apply font-mono;
+  }
+}
+
+/* Reusable layout patterns from Artistic Flair */
+.artistic-border {
+  @apply border-brand-primary/30;
+}
+
+.scroller-inner {
+  display: flex;
+  width: max-content;
+  animation: scroll 40s linear infinite;
+}
+
+@keyframes scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
