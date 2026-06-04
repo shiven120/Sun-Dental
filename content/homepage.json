@@ -1,0 +1,194 @@
+{
+  "hero": {
+    "headline": "Dr. Ashish Ranjan",
+    "subheadline": "Experienced Dentist & Aesthetic Specialist",
+    "image": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=800"
+  },
+  "about": {
+    "profileDescription": "Dr. Ashish Ranjan is a skilled dentist with 9 years of clinical experience, currently practicing at his own clinic, Sun Dental Clinic in Rohini, North West Delhi. He specializes in a wide range of dental treatments, offering services that cover everything from routine dental check-ups to advanced procedures such as Invisalign, braces, clear aligners, deep root cleaning, and smile design.",
+    "mottoQuote": "We provide painless treatment to all patient on facts, information,skills, and experienced gained through education, and professional practice",
+    "education": [
+      {
+        "degree": "BDS",
+        "institution": "Bachelor of Dental Surgery"
+      },
+      {
+        "degree": "MBA",
+        "institution": "Master of Business Administration in Healthcare Management"
+      }
+    ],
+    "memberships": "DELHI DENTAL COUNCIL • INDIAN DENTAL ASSOCIATION"
+  },
+  "services": [
+    {
+      "id": "emergency-care",
+      "title": "Emergency Dental Care",
+      "description": "Immediate and pain-relieving treatments for acute toothaches, dental trauma, and injuries.",
+      "icon": "Heart",
+      "duration": "30-60 Mins",
+      "recovery": "Immediate",
+      "cost": "₹1,000 - ₹3,000",
+      "benefits": [
+        "Instant relief from throbbing, acute tooth pain",
+        "Same-day emergency walk-in slots available",
+        "Safe management of chipped, broken, or knocked-out teeth",
+        "Expert triage to prevent serious secondary oral infections"
+      ]
+    },
+    {
+      "id": "aligners-braces",
+      "title": "Aligners & Braces",
+      "description": "Advanced orthodontic treatments including Invisalign, clear aligners, and traditional braces.",
+      "icon": "Smile",
+      "duration": "6-18 Months",
+      "recovery": "None",
+      "cost": "₹45,000 - ₹1,50,000",
+      "benefits": [
+        "Invisalign and premium clear aligners for high aesthetic comfort",
+        "Correction of overcrowding, gaps, and bite misalignment",
+        "Virtually invisible orthodontic solutions for teens & adults",
+        "Digitally simulated treatment roadmap showing your future smile"
+      ]
+    },
+    {
+      "id": "crowns-bridges",
+      "title": "Crowns & Bridges",
+      "description": "Durable zirconia and ceramic crowns to restore damaged teeth and bridges to replace missing ones.",
+      "icon": "Plus",
+      "duration": "2 Sessions",
+      "recovery": "Immediate",
+      "cost": "₹5,000 - ₹15,000",
+      "benefits": [
+        "Restores structural integrity and natural chewing function",
+        "Made from premium custom-matched zirconia and CAD/CAM ceramics",
+        "Seamlessly blends with adjacent teeth in color and contour",
+        "Long-lasting protection for weak or cracked teeth"
+      ]
+    },
+    {
+      "id": "rct",
+      "title": "Root Canal Therapy (RCT)",
+      "description": "Saving your natural teeth from infection using highly precise, painless endodontic procedures.",
+      "icon": "ShieldCheck",
+      "duration": "1-2 Sessions",
+      "recovery": "1-2 Days",
+      "cost": "₹4,000 - ₹8,000",
+      "benefits": [
+        "Painless treatment using digital rotary endodontic tech",
+        "Saves the natural tooth from extraction and keeps it fully functional",
+        "Eliminates deep bacterial infection in the dental pulp",
+        "Instant relief from extreme temperature sensitivity and throbbing pain"
+      ]
+    },
+    {
+      "id": "dentures",
+      "title": "Dentures (Full/Partial)",
+      "description": "Custom-fabricated, high-quality full or partial dentures to restore oral function and appearance.",
+      "icon": "UserRound",
+      "duration": "3-4 Sessions",
+      "recovery": "1-2 Weeks",
+      "cost": "₹15,000 - ₹35,000",
+      "benefits": [
+        "Restores full chewing ability and speech clarity",
+        "Customized bite alignment for maximum comfort and fit",
+        "Natural-looking pink gums and premium acrylic teeth",
+        "Support for facial muscles to prevent a sunken aesthetic"
+      ]
+    },
+    {
+      "id": "extractions",
+      "title": "Tooth & Wisdom Tooth Extraction",
+      "description": "Gentle and painless removal of severely decayed, broken, or impacted wisdom teeth.",
+      "icon": "Minus",
+      "duration": "30-60 Mins",
+      "recovery": "2-4 Days",
+      "cost": "₹1,500 - ₹7,000",
+      "benefits": [
+        "Safe and fully sterile extraction under advanced local anesthesia",
+        "Stops persistent swelling, gum infections, and posterior pain",
+        "Prevents crowding and shifting of neighboring healthy teeth",
+        "Includes detailed post-op recovery care kit and follow-ups"
+      ]
+    },
+    {
+      "id": "fillings-veneers",
+      "title": "Tooth Colour Fillings & Veneers",
+      "description": "Aesthetic composite restorations and custom porcelain veneers for a flawless, natural-looking smile.",
+      "icon": "Sparkles",
+      "duration": "1-2 Sessions",
+      "recovery": "Immediate",
+      "cost": "₹2,000 - ₹18,000",
+      "benefits": [
+        "Premium composite fillings that match your natural tooth shade",
+        "Ultra-thin porcelain veneers to correct chips, gaps, and deep stains",
+        "Conservative tooth preparation keeping maximum natural structure",
+        "Highly durable materials resistant to wear and future staining"
+      ]
+    },
+    {
+      "id": "infection-screening",
+      "title": "Infection & Cancer Screening",
+      "description": "Thorough oral examinations and screening to detect infections, lesions, and early stages of oral cancer.",
+      "icon": "Stethoscope",
+      "duration": "15-30 Mins",
+      "recovery": "Immediate",
+      "cost": "₹500 - ₹1,50,000",
+      "benefits": [
+        "Early detection of precancerous lesions and oral anomalies",
+        "Expert diagnosis of persistent mouth ulcers and infections",
+        "Non-invasive, fast, and comprehensive clinical checkup",
+        "Complete peace of mind regarding your long-term oral health"
+      ]
+    },
+    {
+      "id": "cleaning-polishing",
+      "title": "Teeth Cleaning & Polishing",
+      "description": "Professional scaling and polishing to remove plaque, tartar, and stubborn stains for fresh breath.",
+      "icon": "Smile",
+      "duration": "30-45 Mins",
+      "recovery": "Immediate",
+      "cost": "₹1,000 - ₹2,500",
+      "benefits": [
+        "Removes hardened tartar (calculus) that brushing cannot clear",
+        "Prevents gum diseases like gingivitis and periodontitis",
+        "Eliminates chronic bad breath (halitosis) for lasting freshness",
+        "Polishing removes coffee, tea, and tobacco stains for a brighter smile"
+      ]
+    },
+    {
+      "id": "implants",
+      "title": "Dental Implants",
+      "description": "Permanent and premium missing teeth replacement using medical-grade titanium posts and lifelike crowns.",
+      "icon": "Shield",
+      "duration": "2-3 Sessions",
+      "recovery": "3-5 Days",
+      "cost": "₹25,000 - ₹45,000",
+      "benefits": [
+        "The most stable, permanent tooth replacement matching natural teeth",
+        "Prevents jawbone loss and deterioration after tooth loss",
+        "No damage or grinding required for neighboring healthy teeth",
+        "Looks, feels, and functions exactly like a natural tooth"
+      ]
+    },
+    {
+      "id": "paediatric-dentistry",
+      "title": "Paediatric Dentistry",
+      "description": "Specialized, gentle dental care and preventive treatments tailored for infants, children, and teens.",
+      "icon": "Clock",
+      "duration": "30-45 Mins",
+      "recovery": "Immediate",
+      "cost": "₹500 - ₹2,500",
+      "benefits": [
+        "Friendly, anxiety-free atmosphere to build positive dentist associations",
+        "Fluoride applications and dental sealants to prevent cavities",
+        "Habit breaking counseling (thumb sucking, tongue thrusting)",
+        "Close tracking of jaw development and primary tooth health"
+      ]
+    }
+  ],
+  "footer": {
+    "phoneNumber": "+91 98118 28767",
+    "hours": "Mon - Sat: 10:00 AM - 07:00 PM, Sunday: Closed",
+    "address": "Sector 11, Rohini, North West Delhi, 110085"
+  }
+}

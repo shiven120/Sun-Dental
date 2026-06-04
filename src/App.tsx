@@ -30,180 +30,57 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
-// --- Clinical Images ---
-const doctorHeroImg = 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=800';
+import { useTina } from 'tinacms/dist/react';
+import { client } from '../tina/__generated__/client';
+import homepageStaticData from '../content/homepage.json';
+
 const doctorScrubsImg = 'https://images.unsplash.com/photo-1579684389782-64d84b5e901d?auto=format&fit=crop&q=80&w=800';
 const doctorAwardImg = 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=800';
 
-// --- Data ---
+const iconMap: Record<string, React.ReactNode> = {
+  Heart: <Heart className="w-6 h-6" />,
+  ShieldCheck: <ShieldCheck className="w-6 h-6" />,
+  UserRound: <UserRound className="w-6 h-6" />,
+  Stethoscope: <Stethoscope className="w-6 h-6" />,
+  Plus: <Plus className="w-6 h-6" />,
+  Minus: <Minus className="w-6 h-6" />,
+  Smile: <Smile className="w-6 h-6" />,
+  Shield: <Shield className="w-6 h-6" />,
+  Clock: <Clock className="w-6 h-6" />,
+  Sparkles: <Sparkles className="w-6 h-6" />,
+};
 
-const SERVICES = [
-  {
-    id: 'emergency-care',
-    title: 'Emergency Dental Care',
-    description: 'Immediate and pain-relieving treatments for acute toothaches, dental trauma, and injuries.',
-    icon: <Heart className="w-6 h-6" />,
-    duration: '30-60 Mins',
-    recovery: 'Immediate',
-    cost: '₹1,000 - ₹3,000',
-    benefits: [
-      'Instant relief from throbbing, acute tooth pain',
-      'Same-day emergency walk-in slots available',
-      'Safe management of chipped, broken, or knocked-out teeth',
-      'Expert triage to prevent serious secondary oral infections'
-    ]
-  },
-  {
-    id: 'aligners-braces',
-    title: 'Aligners & Braces',
-    description: 'Advanced orthodontic treatments including Invisalign, clear aligners, and traditional braces.',
-    icon: <Smile className="w-6 h-6" />,
-    duration: '6-18 Months',
-    recovery: 'None',
-    cost: '₹45,000 - ₹1,50,000',
-    benefits: [
-      'Invisalign and premium clear aligners for high aesthetic comfort',
-      'Correction of overcrowding, gaps, and bite misalignment',
-      'Virtually invisible orthodontic solutions for teens & adults',
-      'Digitally simulated treatment roadmap showing your future smile'
-    ]
-  },
-  {
-    id: 'crowns-bridges',
-    title: 'Crowns & Bridges',
-    description: 'Durable zirconia and ceramic crowns to restore damaged teeth and bridges to replace missing ones.',
-    icon: <Plus className="w-6 h-6" />,
-    duration: '2 Sessions',
-    recovery: 'Immediate',
-    cost: '₹5,000 - ₹15,000',
-    benefits: [
-      'Restores structural integrity and natural chewing function',
-      'Made from premium custom-matched zirconia and CAD/CAM ceramics',
-      'Seamlessly blends with adjacent teeth in color and contour',
-      'Long-lasting protection for weak or cracked teeth'
-    ]
-  },
-  {
-    id: 'rct',
-    title: 'Root Canal Therapy (RCT)',
-    description: 'Saving your natural teeth from infection using highly precise, painless endodontic procedures.',
-    icon: <ShieldCheck className="w-6 h-6" />,
-    duration: '1-2 Sessions',
-    recovery: '1-2 Days',
-    cost: '₹4,000 - ₹8,000',
-    benefits: [
-      'Painless treatment using digital rotary endodontic tech',
-      'Saves the natural tooth from extraction and keeps it fully functional',
-      'Eliminates deep bacterial infection in the dental pulp',
-      'Instant relief from extreme temperature sensitivity and throbbing pain'
-    ]
-  },
-  {
-    id: 'dentures',
-    title: 'Dentures (Full/Partial)',
-    description: 'Custom-fabricated, high-quality full or partial dentures to restore oral function and appearance.',
-    icon: <UserRound className="w-6 h-6" />,
-    duration: '3-4 Sessions',
-    recovery: '1-2 Weeks',
-    cost: '₹15,000 - ₹35,000',
-    benefits: [
-      'Restores full chewing ability and speech clarity',
-      'Customized bite alignment for maximum comfort and fit',
-      'Natural-looking pink gums and premium acrylic teeth',
-      'Support for facial muscles to prevent a sunken aesthetic'
-    ]
-  },
-  {
-    id: 'extractions',
-    title: 'Tooth & Wisdom Tooth Extraction',
-    description: 'Gentle and painless removal of severely decayed, broken, or impacted wisdom teeth.',
-    icon: <Minus className="w-6 h-6" />,
-    duration: '30-60 Mins',
-    recovery: '2-4 Days',
-    cost: '₹1,500 - ₹7,000',
-    benefits: [
-      'Safe and fully sterile extraction under advanced local anesthesia',
-      'Stops persistent swelling, gum infections, and posterior pain',
-      'Prevents crowding and shifting of neighboring healthy teeth',
-      'Includes detailed post-op recovery care kit and follow-ups'
-    ]
-  },
-  {
-    id: 'fillings-veneers',
-    title: 'Tooth Colour Fillings & Veneers',
-    description: 'Aesthetic composite restorations and custom porcelain veneers for a flawless, natural-looking smile.',
-    icon: <Sparkles className="w-6 h-6" />,
-    duration: '1-2 Sessions',
-    recovery: 'Immediate',
-    cost: '₹2,000 - ₹18,000',
-    benefits: [
-      'Premium composite fillings that match your natural tooth shade',
-      'Ultra-thin porcelain veneers to correct chips, gaps, and deep stains',
-      'Conservative tooth preparation keeping maximum natural structure',
-      'Highly durable materials resistant to wear and future staining'
-    ]
-  },
-  {
-    id: 'infection-screening',
-    title: 'Infection & Cancer Screening',
-    description: 'Thorough oral examinations and screening to detect infections, lesions, and early stages of oral cancer.',
-    icon: <Stethoscope className="w-6 h-6" />,
-    duration: '15-30 Mins',
-    recovery: 'Immediate',
-    cost: '₹500 - ₹1,500',
-    benefits: [
-      'Early detection of precancerous lesions and oral anomalies',
-      'Expert diagnosis of persistent mouth ulcers and infections',
-      'Non-invasive, fast, and comprehensive clinical checkup',
-      'Complete peace of mind regarding your long-term oral health'
-    ]
-  },
-  {
-    id: 'cleaning-polishing',
-    title: 'Teeth Cleaning & Polishing',
-    description: 'Professional scaling and polishing to remove plaque, tartar, and stubborn stains for fresh breath.',
-    icon: <Smile className="w-6 h-6" />,
-    duration: '30-45 Mins',
-    recovery: 'Immediate',
-    cost: '₹1,000 - ₹2,500',
-    benefits: [
-      'Removes hardened tartar (calculus) that brushing cannot clear',
-      'Prevents gum diseases like gingivitis and periodontitis',
-      'Eliminates chronic bad breath (halitosis) for lasting freshness',
-      'Polishing removes coffee, tea, and tobacco stains for a brighter smile'
-    ]
-  },
-  {
-    id: 'implants',
-    title: 'Dental Implants',
-    description: 'Permanent and premium missing teeth replacement using medical-grade titanium posts and lifelike crowns.',
-    icon: <Shield className="w-6 h-6" />,
-    duration: '2-3 Sessions',
-    recovery: '3-5 Days',
-    cost: '₹25,000 - ₹45,000',
-    benefits: [
-      'The most stable, permanent tooth replacement matching natural teeth',
-      'Prevents jawbone loss and deterioration after tooth loss',
-      'No damage or grinding required for neighboring healthy teeth',
-      'Looks, feels, and functions exactly like a natural tooth'
-    ]
-  },
-  {
-    id: 'paediatric-dentistry',
-    title: 'Paediatric Dentistry',
-    description: 'Specialized, gentle dental care and preventive treatments tailored for infants, children, and teens.',
-    icon: <Clock className="w-6 h-6" />,
-    duration: '30-45 Mins',
-    recovery: 'Immediate',
-    cost: '₹500 - ₹2,500',
-    benefits: [
-      'Friendly, anxiety-free atmosphere to build positive dentist associations',
-      'Fluoride applications and dental sealants to prevent cavities',
-      'Habit breaking counseling (thumb sucking, tongue thrusting)',
-      'Close tracking of jaw development and primary tooth health'
-    ]
-  }
-];
+const getIcon = (iconName: string) => {
+  return iconMap[iconName] || <Smile className="w-6 h-6" />;
+};
+
+function useHomepageContent() {
+  const [data, setData] = useState<any>(null);
+
+  useEffect(() => {
+    const isDev = import.meta.env.DEV || window.location.search.includes('preview=true');
+    if (isDev) {
+      client.queries.homepage({ relativePath: 'homepage.json' })
+        .then((res) => {
+          setData(res);
+        })
+        .catch((err) => {
+          console.warn("Failed to fetch live content, using static fallback", err);
+          setData({ data: { homepage: homepageStaticData } });
+        });
+    } else {
+      setData({ data: { homepage: homepageStaticData } });
+    }
+  }, []);
+
+  const tinaResult = useTina({
+    query: data?.query || `query { homepage(relativePath: "homepage.json") { id } }`,
+    variables: data?.variables || {},
+    data: data?.data || { homepage: homepageStaticData },
+  });
+
+  return tinaResult.data?.homepage || homepageStaticData;
+}
 
 const INITIAL_REVIEWS = [
   {
@@ -405,123 +282,137 @@ const Navbar: React.FC<NavbarProps> = ({ onBookClick, onMyAppointmentsClick, boo
 interface HeroProps {
   onBookClick: () => void;
   onGalleryClick: (imgSrc: string, caption: string) => void;
+  content: any;
 }
 
-const Hero: React.FC<HeroProps> = ({ onBookClick, onGalleryClick }) => (
-  <section id="doctor" className="relative pt-32 pb-16 md:pt-48 md:pb-24 overflow-hidden">
-    {/* Artistic Background Decor */}
-    <div className="absolute top-0 right-0 w-1/3 h-full bg-brand-beige -z-10 hidden md:block"></div>
-    <div className="absolute top-1/2 left-[40%] w-[1px] h-32 bg-brand-primary/50 hidden md:block"></div>
+const Hero: React.FC<HeroProps> = ({ onBookClick, onGalleryClick, content }) => {
+  const headlineWords = (content.hero?.headline || '').split(' ');
+  const firstPart = headlineWords.slice(0, -1).join(' ');
+  const lastPart = headlineWords[headlineWords.length - 1] || '';
+  const experienceMatch = content.about?.profileDescription?.match(/(\d+)\s+years/i);
+  const yearsOfExperience = experienceMatch ? `${experienceMatch[1]} Years` : "9 Years";
 
-    <div className="max-w-7xl mx-auto px-8 md:px-16">
-      <div className="grid md:grid-cols-12 gap-12 items-center">
-        <motion.div 
-          className="md:col-span-7"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <span className="text-[10px] tracking-[0.3em] font-bold text-brand-primary uppercase mb-6 block">Experienced Dentist & Aesthetic Specialist</span>
-          <h1 className="text-6xl md:text-8xl font-serif leading-[0.9] text-brand-dark mb-8">
-            Dr. Ashish <br/>
-            <span className="italic text-brand-primary">Ranjan.</span>
-          </h1>
-          <div className="space-y-6 max-w-xl">
-            <p className="text-sm text-gray-500 leading-relaxed font-light font-sans">
-              Dr. Ashish Ranjan is a skilled dentist with <span className="text-brand-dark font-medium">9 years of clinical experience</span>, currently practicing at his own clinic, Sun Dental Clinic in Rohini, North West Delhi. He specializes in a wide range of dental treatments, offering services that cover everything from routine check-ups to advanced procedures such as Invisalign, braces, clear aligners, deep root cleaning, and smile design.
-            </p>
+  return (
+    <section id="doctor" className="relative pt-32 pb-16 md:pt-48 md:pb-24 overflow-hidden">
+      {/* Artistic Background Decor */}
+      <div className="absolute top-0 right-0 w-1/3 h-full bg-brand-beige -z-10 hidden md:block"></div>
+      <div className="absolute top-1/2 left-[40%] w-[1px] h-32 bg-brand-primary/50 hidden md:block"></div>
 
-            <div className="my-6 p-4 border-l-2 border-brand-primary bg-brand-beige/50 italic text-xs text-brand-dark/80 font-sans leading-relaxed">
-              "We provide painless treatment to all patient on facts, information,skills, and experienced gained through education, and professional practice"
+      <div className="max-w-7xl mx-auto px-8 md:px-16">
+        <div className="grid md:grid-cols-12 gap-12 items-center">
+          <motion.div 
+            className="md:col-span-7"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <span className="text-[10px] tracking-[0.3em] font-bold text-brand-primary uppercase mb-6 block">
+              {content.hero?.subheadline}
+            </span>
+            <h1 className="text-6xl md:text-8xl font-serif leading-[0.9] text-brand-dark mb-8">
+              {firstPart} <br/>
+              <span className="italic text-brand-primary">{lastPart}</span>
+            </h1>
+            <div className="space-y-6 max-w-xl">
+              <p className="text-sm text-gray-500 leading-relaxed font-light font-sans">
+                {content.about?.profileDescription}
+              </p>
+
+              <div className="my-6 p-4 border-l-2 border-brand-primary bg-brand-beige/50 italic text-xs text-brand-dark/80 font-sans leading-relaxed">
+                "{content.about?.mottoQuote}"
+              </div>
+              
+              <div className="artistic-border border-l-2 border-brand-primary/20 pl-6 space-y-4">
+                <div className="flex items-start gap-4">
+                  <span className="text-[10px] font-mono text-brand-primary mt-1">EDU</span>
+                  <p className="text-xs text-gray-500 leading-relaxed font-sans">
+                    {content.about?.education?.map((edu: any, idx: number) => (
+                      <React.Fragment key={idx}>
+                        <span className="text-brand-dark font-bold">{edu.degree}</span> — {edu.institution}<br/>
+                      </React.Fragment>
+                    ))}
+                  </p>
+                </div>
+                <div className="flex items-start gap-4">
+                  <span className="text-[10px] font-mono text-brand-primary mt-1">MBR</span>
+                  <p className="text-[9px] text-gray-400 leading-relaxed uppercase tracking-widest font-mono">
+                    {content.about?.memberships}
+                  </p>
+                </div>
+                <div className="flex items-center gap-4 pt-4 border-t border-brand-border/40">
+                  <span className="text-[10px] font-mono text-brand-primary">VIEW</span>
+                  <div className="flex gap-2">
+                    <div 
+                      onClick={() => onGalleryClick(doctorScrubsImg, `${content.hero?.headline} - Clinical Portrait`)}
+                      className="w-16 h-12 border border-brand-border hover:border-brand-primary cursor-pointer overflow-hidden transition-all relative group shrink-0"
+                      title="Clinical Scrubs Portrait"
+                    >
+                      <img src={doctorScrubsImg} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" alt="Clinical Scrub Portrait" />
+                      <div className="absolute inset-0 bg-brand-dark/20 group-hover:bg-transparent transition-all" />
+                    </div>
+                    <div 
+                      onClick={() => onGalleryClick(doctorAwardImg, "Sun Dental Clinic - Modern Treatment Room & Operatory")}
+                      className="w-16 h-12 border border-brand-border hover:border-brand-primary cursor-pointer overflow-hidden transition-all relative group shrink-0"
+                      title="Sun Dental Clinic Room"
+                    >
+                      <img src={doctorAwardImg} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" alt="Clinic Room" />
+                      <div className="absolute inset-0 bg-brand-dark/20 group-hover:bg-transparent transition-all" />
+                    </div>
+                  </div>
+                  <span className="text-[9px] text-gray-400 font-sans tracking-wide leading-tight font-light shrink-0">Click to view credentials & clinic</span>
+                </div>
+              </div>
             </div>
             
-            <div className="artistic-border border-l-2 border-brand-primary/20 pl-6 space-y-4">
-              <div className="flex items-start gap-4">
-                <span className="text-[10px] font-mono text-brand-primary mt-1">EDU</span>
-                <p className="text-xs text-gray-500 leading-relaxed font-sans">
-                  <span className="text-brand-dark font-bold">BDS</span> — Bachelor of Dental Surgery<br/>
-                  <span className="text-brand-dark font-bold">MBA</span> — Master of Business Administration in Healthcare Management
-                </p>
+            <div className="flex flex-col sm:flex-row gap-8 border-t border-brand-border pt-10 mt-10">
+              <div className="flex items-center gap-4">
+                 <div className="w-10 h-10 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary">
+                    <Sparkles size={20} />
+                 </div>
+                 <div>
+                    <p className="text-[10px] uppercase font-bold tracking-widest text-brand-dark leading-none text-nowrap">Orthodontics & Aligners</p>
+                    <p className="text-[9px] uppercase tracking-widest text-gray-400 mt-1">Invisalign & Clear Aligners</p>
+                 </div>
               </div>
-              <div className="flex items-start gap-4">
-                <span className="text-[10px] font-mono text-brand-primary mt-1">MBR</span>
-                <p className="text-[9px] text-gray-400 leading-relaxed uppercase tracking-widest font-mono">
-                  DELHI DENTAL COUNCIL • INDIAN DENTAL ASSOCIATION
-                </p>
-              </div>
-              <div className="flex items-center gap-4 pt-4 border-t border-brand-border/40">
-                <span className="text-[10px] font-mono text-brand-primary">VIEW</span>
-                <div className="flex gap-2">
-                  <div 
-                    onClick={() => onGalleryClick(doctorScrubsImg, "Dr. Ashish Ranjan - Clinical Portrait")}
-                    className="w-16 h-12 border border-brand-border hover:border-brand-primary cursor-pointer overflow-hidden transition-all relative group shrink-0"
-                    title="Clinical Scrubs Portrait"
-                  >
-                    <img src={doctorScrubsImg} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" alt="Clinical Scrub Portrait" />
-                    <div className="absolute inset-0 bg-brand-dark/20 group-hover:bg-transparent transition-all" />
-                  </div>
-                  <div 
-                    onClick={() => onGalleryClick(doctorAwardImg, "Sun Dental Clinic - Modern Treatment Room & Operatory")}
-                    className="w-16 h-12 border border-brand-border hover:border-brand-primary cursor-pointer overflow-hidden transition-all relative group shrink-0"
-                    title="Sun Dental Clinic Room"
-                  >
-                    <img src={doctorAwardImg} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" alt="Clinic Room" />
-                    <div className="absolute inset-0 bg-brand-dark/20 group-hover:bg-transparent transition-all" />
-                  </div>
-                </div>
-                <span className="text-[9px] text-gray-400 font-sans tracking-wide leading-tight font-light shrink-0">Click to view credentials & clinic</span>
+              <div className="flex items-center gap-4">
+                 <div className="w-10 h-10 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary">
+                    <Shield size={20} />
+                 </div>
+                 <div>
+                    <p className="text-[10px] uppercase font-bold tracking-widest text-brand-dark leading-none text-nowrap">MBA Dentist</p>
+                    <p className="text-[9px] uppercase tracking-widest text-gray-400 mt-1 font-sans">Healthcare Management</p>
+                 </div>
               </div>
             </div>
-          </div>
-          
-          <div className="flex flex-col sm:flex-row gap-8 border-t border-brand-border pt-10 mt-10">
-            <div className="flex items-center gap-4">
-               <div className="w-10 h-10 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary">
-                  <Sparkles size={20} />
-               </div>
-               <div>
-                  <p className="text-[10px] uppercase font-bold tracking-widest text-brand-dark leading-none text-nowrap">Orthodontics & Aligners</p>
-                  <p className="text-[9px] uppercase tracking-widest text-gray-400 mt-1">Invisalign & Clear Aligners</p>
-               </div>
-            </div>
-            <div className="flex items-center gap-4">
-               <div className="w-10 h-10 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary">
-                  <Shield size={20} />
-               </div>
-               <div>
-                  <p className="text-[10px] uppercase font-bold tracking-widest text-brand-dark leading-none text-nowrap">MBA Dentist</p>
-                  <p className="text-[9px] uppercase tracking-widest text-gray-400 mt-1 font-sans">Healthcare Management</p>
-               </div>
-            </div>
-          </div>
-        </motion.div>
+          </motion.div>
 
-        <motion.div 
-          className="md:col-span-5 flex justify-center"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.3 }}
-        >
-          <div className="relative group w-full max-w-md">
-            <div className="aspect-[3/4] bg-brand-hover overflow-hidden artistic-border border">
-               <img 
-                 src={doctorHeroImg} 
-                 className="w-full h-full object-cover brightness-105 transition-all duration-700 hover:scale-105 cursor-zoom-in" 
-                 alt="Dr. Ashish Ranjan"
-                 onClick={() => onGalleryClick(doctorHeroImg, "Dr. Ashish Ranjan - Experienced Dentist in Sun Dental Clinic Rohini")}
-                 referrerPolicy="no-referrer"
-               />
+          <motion.div 
+            className="md:col-span-5 flex justify-center"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.3 }}
+          >
+            <div className="relative group w-full max-w-md">
+              <div className="aspect-[3/4] bg-brand-hover overflow-hidden artistic-border border">
+                 <img 
+                   src={content.hero?.image} 
+                   className="w-full h-full object-cover brightness-105 transition-all duration-700 hover:scale-105 cursor-zoom-in" 
+                   alt={content.hero?.headline}
+                   onClick={() => onGalleryClick(content.hero?.image, `${content.hero?.headline} - Experienced Dentist in Sun Dental Clinic Rohini`)}
+                   referrerPolicy="no-referrer"
+                 />
+              </div>
+              <div className="absolute -bottom-10 -right-10 bg-brand-dark p-8 text-white hidden md:block border-l-4 border-brand-primary shadow-2xl">
+                 <span className="text-[10px] uppercase tracking-[0.3em] font-bold block mb-2">Practice</span>
+                 <span className="text-4xl font-serif">{yearsOfExperience}</span>
+              </div>
             </div>
-            <div className="absolute -bottom-10 -right-10 bg-brand-dark p-8 text-white hidden md:block border-l-4 border-brand-primary shadow-2xl">
-               <span className="text-[10px] uppercase tracking-[0.3em] font-bold block mb-2">Practice</span>
-               <span className="text-4xl font-serif">9 Years</span>
-            </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 const MarqueeStats = () => (
   <div className="bg-brand-dark py-12 overflow-hidden border-y border-brand-primary/20">
@@ -723,9 +614,11 @@ interface BookingModalProps {
   preselectedServiceId: string | null;
   onClose: () => void;
   onBookingSuccess: (newBooking: any) => void;
+  services: any[];
+  doctorName?: string;
 }
 
-const BookingModal: React.FC<BookingModalProps> = ({ isOpen, preselectedServiceId, onClose, onBookingSuccess }) => {
+const BookingModal: React.FC<BookingModalProps> = ({ isOpen, preselectedServiceId, onClose, onBookingSuccess, services, doctorName }) => {
   const [step, setStep] = useState(1);
   const [selectedService, setSelectedService] = useState(preselectedServiceId || '');
   const [selectedDate, setSelectedDate] = useState<any>(null);
@@ -820,7 +713,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, preselectedServiceI
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateStep3()) {
-      const selectedServiceObj = SERVICES.find(s => s.id === selectedService);
+      const selectedServiceObj = services.find(s => s.id === selectedService);
       const newBooking = {
         id: Math.random().toString(36).substr(2, 9),
         serviceId: selectedService,
@@ -839,7 +732,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, preselectedServiceI
     }
   };
 
-  const activeServiceObj = SERVICES.find(s => s.id === selectedService);
+  const activeServiceObj = services.find(s => s.id === selectedService);
 
   return (
     <AnimatePresence>
@@ -894,7 +787,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, preselectedServiceI
                   <div className="space-y-6">
                     <p className="text-xs text-gray-500 leading-relaxed font-light mb-6">Choose a service from our signature treatments below to start booking.</p>
                     <div className="grid sm:grid-cols-2 gap-4">
-                      {SERVICES.map(s => (
+                      {services.map(s => (
                         <div 
                           key={s.id}
                           onClick={() => handleServiceSelect(s.id)}
@@ -903,7 +796,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, preselectedServiceI
                           }`}
                         >
                           <div className={`p-2 rounded-full shrink-0 ${selectedService === s.id ? 'bg-brand-primary text-white' : 'bg-brand-beige text-brand-primary'}`}>
-                            {s.icon}
+                            {getIcon(s.icon)}
                           </div>
                           <div>
                             <p className="text-sm font-serif font-bold text-brand-dark">{s.title}</p>
@@ -1053,7 +946,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, preselectedServiceI
                       </div>
                       <div className="flex justify-between items-start border-t border-brand-border/40 pt-2">
                         <span className="text-[9px] uppercase font-mono tracking-widest font-bold text-gray-400">Consultant</span>
-                        <span className="text-xs font-sans text-brand-dark font-medium text-right">Dr. Ashish Ranjan</span>
+                        <span className="text-xs font-sans text-brand-dark font-medium text-right">{doctorName || 'Dr. Ashish Ranjan'}</span>
                       </div>
                       <div className="flex justify-between items-start border-t border-brand-border/40 pt-2">
                         <span className="text-[9px] uppercase font-mono tracking-widest font-bold text-gray-400">Scheduled Date</span>
@@ -1275,6 +1168,10 @@ const AppointmentsDrawer: React.FC<AppointmentsDrawerProps> = ({ isOpen, booking
 // --- Main App ---
 
 export default function App() {
+  const content = useHomepageContent();
+  const doctorName = content.hero?.headline || "Dr. Ashish Ranjan";
+  const doctorLastName = doctorName.split(" ").pop() || "Ranjan";
+
   // Service detail drawer state
   const [selectedServiceForDrawer, setSelectedServiceForDrawer] = useState<any>(null);
 
@@ -1290,7 +1187,7 @@ export default function App() {
   const [isAppointmentsDrawerOpen, setIsAppointmentsDrawerOpen] = useState(false);
 
   // Reviews dynamic state
-  const [reviews, setReviews] = useState<any[]>(INITIAL_REVIEWS);
+  const [reviews, setReviews] = useState<any[]>([]);
   const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
   const [newReviewName, setNewReviewName] = useState('');
   const [newReviewRating, setNewReviewRating] = useState(5);
@@ -1312,15 +1209,23 @@ export default function App() {
 
     // Reviews
     const savedReviews = localStorage.getItem('sun_dental_reviews');
+    const localInitialReviews = INITIAL_REVIEWS.map(r => {
+      const text = r.text
+        .replace(/Dr\. Ranjan/g, `Dr. ${doctorLastName}`)
+        .replace(/Dr\. Ashish Ranjan/g, doctorName);
+      return { ...r, text };
+    });
     if (savedReviews) {
       try {
         const parsed = JSON.parse(savedReviews);
-        setReviews([...INITIAL_REVIEWS, ...parsed]);
+        setReviews([...localInitialReviews, ...parsed]);
       } catch (e) {
         console.error("Error loading local reviews", e);
       }
+    } else {
+      setReviews(localInitialReviews);
     }
-  }, []);
+  }, [doctorName, doctorLastName]);
 
   // Set explore service detail click handler
   const handleExploreService = (service: any) => {
@@ -1407,6 +1312,7 @@ export default function App() {
         <Hero 
           onBookClick={handleOpenBookingModal} 
           onGalleryClick={(src, caption) => setActiveLightboxImg({ src, caption })}
+          content={content}
         />
         
         <MarqueeStats />
@@ -1425,8 +1331,8 @@ export default function App() {
             </div>
             
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-0 artistic-border border-l border-t bg-white">
-              {SERVICES.map(service => (
-                <ServiceCard key={service.id} service={service} onExplore={handleExploreService} />
+              {(content.services || []).map((service: any) => (
+                <ServiceCard key={service.id} service={{ ...service, icon: getIcon(service.icon) }} onExplore={handleExploreService} />
               ))}
             </div>
           </div>
@@ -1572,9 +1478,13 @@ export default function App() {
               <h2 className="text-5xl font-serif text-brand-dark italic">Common Questions.</h2>
             </div>
             <div className="border-t border-brand-border">
-              {FAQS.map((faq, idx) => (
-                <FAQItem key={idx} faq={faq} />
-              ))}
+              {FAQS.map((faq, idx) => {
+                const answer = faq.a
+                  .replace(/\+91 98118 28767/g, content.footer?.phoneNumber || '+91 98118 28767')
+                  .replace(/Dr\. Ranjan/g, `Dr. ${doctorLastName}`)
+                  .replace(/Dr\. Ashish Ranjan/g, doctorName);
+                return <FAQItem key={idx} faq={{ ...faq, a: answer }} />;
+              })}
             </div>
           </div>
         </section>
@@ -1611,14 +1521,21 @@ export default function App() {
           <div className="flex flex-col md:flex-row items-center gap-6">
             <div className="flex items-center gap-4">
               <div className="w-2 h-2 rounded-full bg-brand-primary"></div>
-              <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-brand-dark font-mono">Dr. Ashish Ranjan</span>
+              <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-brand-dark font-mono">{doctorName}</span>
             </div>
             <span className="text-[10px] text-gray-400 uppercase tracking-widest hidden md:block">•</span>
-            <span className="text-[10px] text-gray-400 uppercase tracking-[0.15em] font-mono">Lead Dentist • 9 Years Clinical Experience</span>
+            {content.about?.profileDescription?.match(/(\d+)\s+years/i) ? (
+              <span className="text-[10px] text-gray-400 uppercase tracking-[0.15em] font-mono">Lead Dentist • {content.about.profileDescription.match(/(\d+)\s+years/i)[1]} Years Clinical Experience</span>
+            ) : (
+              <span className="text-[10px] text-gray-400 uppercase tracking-[0.15em] font-mono">Lead Dentist • 9 Years Clinical Experience</span>
+            )}
           </div>
           <div className="flex flex-col md:flex-row gap-8 text-[10px] text-gray-500 uppercase tracking-[0.2em] text-center md:text-left font-mono">
-            <span className="flex items-center gap-1"><MapPin size={12} className="text-brand-primary" /> Sector 11, Rohini, North West Delhi, 110085</span>
-            <span className="flex items-center gap-1"><Phone size={12} className="text-brand-primary" /> T: +91 98118 28767</span>
+            <span className="flex items-center gap-1"><MapPin size={12} className="text-brand-primary" /> {content.footer?.address || 'Sector 11, Rohini, North West Delhi, 110085'}</span>
+            <span className="flex items-center gap-1"><Phone size={12} className="text-brand-primary" /> T: {content.footer?.phoneNumber || '+91 98118 28767'}</span>
+            {content.footer?.hours && (
+              <span className="flex items-center gap-1"><Clock size={12} className="text-brand-primary" /> {content.footer.hours}</span>
+            )}
           </div>
         </div>
         <div className="max-w-7xl mx-auto mt-12 pt-12 border-t border-brand-border flex justify-between items-center opacity-40">
@@ -1632,7 +1549,7 @@ export default function App() {
 
       {/* Mobile Sticky Bar */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-brand-dark p-4 flex gap-4 border-t border-brand-primary/20 font-sans">
-        <a href="tel:+919811828767" className="flex-1 bg-white/5 text-white py-4 text-[10px] uppercase tracking-widest font-bold text-center">
+        <a href={`tel:${(content.footer?.phoneNumber || '+919811828767').replace(/\s+/g, '')}`} className="flex-1 bg-white/5 text-white py-4 text-[10px] uppercase tracking-widest font-bold text-center">
           Call Now
         </a>
         <button 
@@ -1655,6 +1572,8 @@ export default function App() {
         preselectedServiceId={bookingPrefillId}
         onClose={() => setIsBookingOpen(false)}
         onBookingSuccess={handleBookingSuccess}
+        services={content.services || []}
+        doctorName={doctorName}
       />
 
       <AppointmentsDrawer 

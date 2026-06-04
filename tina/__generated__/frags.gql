@@ -1,0 +1,37 @@
+fragment HomepageParts on Homepage {
+  __typename
+  hero {
+    __typename
+    headline
+    subheadline
+    image
+  }
+  about {
+    __typename
+    profileDescription
+    mottoQuote
+    education {
+      __typename
+      degree
+      institution
+    }
+    memberships
+  }
+  services {
+    __typename
+    id
+    title
+    description
+    icon
+    duration
+    recovery
+    cost
+    benefits
+  }
+  footer {
+    __typename
+    phoneNumber
+    hours
+    address
+  }
+}
