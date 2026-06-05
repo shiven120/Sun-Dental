@@ -1,12 +1,12 @@
 import { defineConfig } from "tinacms";
 
 // Your Tina Cloud project credentials
-const branch = process.env.HEAD || process.env.VERCEL_GIT_COMMIT_REF || "main";
+const branch = process.env.NEXT_PUBLIC_TINA_BRANCH || 'main';
 
 export default defineConfig({
   branch,
-  clientId: process.env.TINA_CLIENT_ID || null,
-  token: process.env.TINA_TOKEN || null,
+  clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID || '',
+  token: process.env.TINA_TOKEN || '',
   build: {
     outputFolder: "admin",
     publicFolder: "public",
